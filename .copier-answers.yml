@@ -1,0 +1,10 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v1.4.0
+_src_path: gh:Overkillguy/python-template
+author_email: jb@jiby.tech
+author_name: Jb Doyon
+description: Convert docker commands to podman/systemd quadlet files
+package_name: docker2quadlet
+project_name: Docker2Quadlet
+project_slug: docker2quadlet
+python_version: '3.11'

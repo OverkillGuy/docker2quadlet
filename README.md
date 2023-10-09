@@ -6,7 +6,11 @@ Requires Python 3.11
 
 ## Usage
 
-Depends on what the code in there does.
+Convert docker-compose.yaml files into podman/systemd quadlet files.
+
+``` shell
+docker2quadlet docker-compose.yaml
+```
 
 ### Run the command
 

@@ -1,0 +1,54 @@
+[Unit]
+Description="Systemd generated service for compose's {{svc_name}} service"
+
+[Container]
+Image={{svc.image}}
+{% for vol in svc.volumes %}
+{% if "/" in vol.split(":")[0] %}
+# Warning: docker2quadlet does not yet support bindmounts!
+# Review the following bindmount to insert absolute path
+# Volume={{vol.split(":")[0]}}:{{vol.split(":")[1]}}
+{% else %}
+Volume={{vol.split(":")[0]}}.volume:{{vol.split(":")[1]}}
+{% endif %}
+{% endfor %}
+{% if "environment" in svc %}
+{% for env_key, env_value in svc.environment.items() %}
+Environment={{env_key}}={{env_value}}
+{% endfor %}
+{% endif %}
+{% if "ports" in svc %}
+{% for port in svc.ports %}
+PublishPort={{port}}
+{% endfor %}
+{% endif %}
+{% if "env_file" in svc %}
+{% if svc.env_file is string %}
+EnvironmentFile={{svc.env_file}}
+{% else %}
+{% for env_fname in svc.env_file %}
+EnvironmentFile={{env_fname}}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if "healthcheck" in svc %}
+{% if "test" in svc.healthcheck %}
+{% if svc.healthcheck.test is string %}
+HealthCmd={{svc.healthcheck.test}}
+{% else %}
+HealthCmd={{ svc.healthcheck.test[1:] | join(" ") }}
+{% endif %}
+{% endif %}
+{% if "interval" in svc.healthcheck%}
+HealthInterval={{svc.healthcheck.interval}}{% endif%}
+{% if "timeout" in svc.healthcheck%}
+HealthTimeout={{svc.healthcheck.timeout}}{% endif%}
+{% if "retries" in svc.healthcheck%}
+HealthRetries={{svc.healthcheck.retries}}{% endif%}
+{% endif%}
+{% if "restart" in svc %}
+
+[Service]
+# Note: docker-compose restart key '{{svc.restart}}' not mapping well:
+Restart=always
+{% endif %}

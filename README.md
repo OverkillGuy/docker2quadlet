@@ -109,3 +109,13 @@ make docs docs-serve
 
 This repository was created by the copier template available at
 gh:Overkillguy/python-template, using version v1.4.0.
+
+## TODO
+
+- Service dependency
+- Volumes and network creation
+- Generate to files not string
+- Bindmounts
+- Compose "Restart always": remap to proper quadlet restart policy
+- Test it
+- Integrate with <https://www.composerize.com/>?
